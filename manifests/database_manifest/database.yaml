@@ -25,18 +25,24 @@ spec:
               - key: kubernetes.io/hostname
                 operator: In
                 values:
-                - node2
+                - node3
       containers:
       - image: postgres
         name: postgres
         ports:
         - containerPort: 5432
         env:
-         - name: POSTGRES_USER
-           value: "postgres"
-         - name: POSTGRES_PASSWORD
-           value: "123"
-         - name: POSTGRES_DB
-           value: "demodb"
+        - name: POSTGRES_USER
+          valueFrom:
+           secretKeyRef:
+            name: db-secret
+            key: POSTGRES_USER
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+           secretKeyRef:
+            name: db-secret
+            key: POSTGRES_PASSWORD
+        - name: POSTGRES_DB
+          value: "demodb"
         
 status: {}

@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: {{ .Values.frontend_deployment.labels.app }}
+  name: {{ .Values.frontend_service.service_name }}
+spec:
+  ports:
+  - port: {{ .Values.frontend_service.port }}
+    protocol: {{ .Values.frontend_service.protocol }}
+    targetPort: {{ .Values.frontend_service.target_port }}
+    nodePort: {{ .Values.frontend_service.node_port }}
+  selector:
+    app: {{ .Values.frontend_deployment.labels.app }}
+  type: {{ .Values.frontend_service.service_type }}
+status:
+  loadBalancer: {}
+

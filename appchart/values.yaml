@@ -1,0 +1,78 @@
+# frontend-deployment file values
+
+frontend_deployment:
+  labels:
+          app: frontend-deployment
+  deployment_name: frontend-deployment
+  replicas: 2
+  image: abidiqbal/frontend:latest
+  container_name: frontend-deployment
+  container_port: 3000
+
+# frontend-service file values
+frontend_service:
+  service_name: frontend
+  port: 3000
+  protocol: TCP
+  target_port: 3000
+  node_port: 30080
+  service_type: NodePort
+
+# database-deployment file values
+database_deployment:
+  labels:
+          app: database-deployment
+  deployment_name: database-deployment
+  replicas: 1
+  affinity_key: kubernetes.io/hostname
+  affinity_operator: In
+  affinity_value: node3
+  image: postgres
+  container_name: postgres
+  container_port: 5432
+
+# database-service file values
+database_service:
+  service_name: database
+  port: 5432
+  protocol: TCP
+  target_port: 5432
+  service_type: ClusterIP
+
+# database-secret file values
+database_secret:
+  postgres_db_name: ZGVtb2Ri
+  postgres_password: MTIz
+  postgres_user: cG9zdGdyZXM=
+  secret_name: database-secret
+
+# backend-deployment file values
+backend_deployment:
+  labels:
+          app: backend-deployment
+  deployment_name: backend-deployment
+  replicas: 2
+  image: abidiqbal/backend:latest
+  container_name: xgrid-sprint-1
+  container_port: 8080
+
+# backend-service file values
+backend_service:
+  service_name: backend
+  port: 8080
+  protocol: TCP
+  target_port: 8080
+  service_type: ClusterIP
+
+# backend-secret file values
+backend_secret:
+  postgres_db_name: ZGVtb2Ri
+  postgres_password: MTIz
+  postgres_user: cG9zdGdyZXM=
+  secret_name: backend-secret
+
+# configmap file values
+configmap:
+  postgres_endpoint: database
+  postgres_port: 5432
+  configmap_name: backend-configmap

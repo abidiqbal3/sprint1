@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: {{ .Values.database_deployment.labels.app }}
+  name: {{ .Values.database_deployment.deployment_name }}
+spec:
+  replicas: {{ .Values.database_deployment.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.database_deployment.labels.app }}
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: {{ .Values.database_deployment.labels.app }}
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: {{ .Values.database_deployment.affinity_key }}
+                operator: {{ .Values.database_deployment.affinity_operator }}
+                values:
+                - {{ .Values.database_deployment.affinity_value }}
+      containers:
+      - image: {{ .Values.database_deployment.image }}
+        name: {{ .Values.database_deployment.container_name }}
+        ports:
+        - containerPort: {{ .Values.database_deployment.container_port }}
+        envFrom:
+        - secretRef:
+            name: {{ .Values.database_secret.secret_name }}
+        resources: {}
+status: {}
+
