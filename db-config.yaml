@@ -1,0 +1,12 @@
+apiVersion: v1
+data:
+  POSTGRES_ENDPOINT: database
+  POSTGRES_NAME: postgres
+  POSTGRES_PORT: "5432"
+kind: ConfigMap
+metadata:
+  creationTimestamp: "2022-08-21T19:31:25Z"
+  name: dbconfig-map
+  namespace: default
+  resourceVersion: "33281"
+  uid: 5d9eb1b4-bde8-4db4-953b-6d8fdd7680a1
